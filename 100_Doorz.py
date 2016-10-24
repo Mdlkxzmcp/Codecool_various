@@ -14,8 +14,8 @@ def doors(number_of_doors):
     print("The following doors are open: ", end="")
 
     # adding an index value to doorz so that the number of the door is shown
-    for index, door in enumerate(doorz):
-        if(door is True):
+    for index, state_of_door in enumerate(doorz):
+        if(state_of_door is True):
             print(format(index + 1) + " ", end="")
 
 # calling the function and inputing the number of doors to process
