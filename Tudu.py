@@ -21,7 +21,7 @@ def choice_screen():
 
 def list_function():
     """function that prints out the main_list if it exists"""
-    if(len(main_list) != 0):
+    if main_list:
         print("You saved the following to-do items: ")
         i = 0
         for entry in main_list:
