@@ -4,7 +4,7 @@ def list_function():
     if the_list:
         print("You saved the following to-do items: ")
         for i, entry in enumerate(the_list, 1):
-            print(i, ": ", the_list[i - 1])
+            print(i, ". ", the_list[i - 1], sep='')
     else:
         print("List? Let's start one!")
         add_to_list()
