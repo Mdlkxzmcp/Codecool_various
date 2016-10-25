@@ -4,22 +4,8 @@ multiplying_list = ["*", "multiply"]
 dividing_list = ["/", "divide"]
 
 
-def main():
-    question_handler()
-    if(decision in adding_list):
-        Math_Functions.adding(num1, num2)
-    elif(decision in subtracting_list):
-        Math_Functions.subtracting(num1, num2)
-    elif(decision in multiplying_list):
-        Math_Functions.multiplying(num1, num2)
-    elif(decision in dividing_list):
-        Math_Functions.dividing(num1, num2)
-    else:
-        print("Unexpected situation, calling mentors...")
-
-
-# this function handles the user input
 def question_handler():
+    """this function handles the user input"""
     global num1, num2, decision
     # while blocks that check if the input is of valid type
     while True:
@@ -76,6 +62,21 @@ class Math_Functions:
         result = num1 / num2
         print("Result: " + format(result))
 
+
+def main():
+    """the main function first calls question_handler and then uses its output
+        to call the Math_Functions functions"""
+    question_handler()
+    if(decision in adding_list):
+        Math_Functions.adding(num1, num2)
+    elif(decision in subtracting_list):
+        Math_Functions.subtracting(num1, num2)
+    elif(decision in multiplying_list):
+        Math_Functions.multiplying(num1, num2)
+    elif(decision in dividing_list):
+        Math_Functions.dividing(num1, num2)
+    else:
+        print("Unexpected situation, calling mentors...")
 
 if __name__ == '__main__':
     main()
