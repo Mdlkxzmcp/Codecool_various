@@ -1,25 +1,17 @@
-"""To be completed"""
-
-
-import sys
-
-
-nr_of_iteration = 1
-num1 = 0
-num2 = 1
+def fibo(number):
+    "function that prints out the given fibonacci number"
+    if number == 0 or number == 1:
+        return 1
+    else:
+        return fibo(number - 1) + fibo(number - 2)
 
 while True:
     try:
-        iteration = int(
-            input("How many fibbo numbers do ya need ma man? "))
+        number = int(
+            input("Which fibo number do you need man? "))
+        print(fibo(number))
     except ValueError:
         print("Woah there calm down, numbers please!")
         continue
     else:
         break
-
-while(iteration > 0):
-    print(format(nr_of_iteration) + ": " + format(num1))
-    num1, num2 = num2, num1 + num2
-    iteration -= 1
-    nr_of_iteration += 1
