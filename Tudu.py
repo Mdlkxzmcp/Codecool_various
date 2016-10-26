@@ -69,10 +69,10 @@ def main():
 if __name__ == '__main__':
     # the program first tries to open the file containing the_list
     try:
-        with open("the_tudu_list.txt", "r+") as list:
+        with open("the_list.txt", "r+") as list:
             the_list = list.read().splitlines()
     # if it fails it makes a new one! Then  the main() is called
     except:
-        with open("the_tudu_list.txt", "a+") as list:
+        with open("the_list.txt", "a+") as list:
             the_list = list.read().splitlines()
     main()
