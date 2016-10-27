@@ -6,17 +6,7 @@ global current_capital
 
 
 def file_operator():
-    global high_scores
     global countries_and_capitals
-
-    try:
-        with open("high_scores.txt", "r+") as list:
-            high_scores = list.read().splitlines()
-    # if this fails it makes a new high_scores list!
-    except:
-        with open("high_scores.txt", "a+") as list:
-            high_scores = list.read().splitlines()
-
     with open("countries_and_capitals.txt") as list:
         countries_and_capitals = list.read().splitlines()
 
@@ -30,6 +20,13 @@ def current_setter():
     current_capital = choosen_pair.split("| ")[1]
     current_capital_upper = current_capital.upper()
     current_country = choosen_pair.split(" |")[0]
+
+
+def high_score_screen():
+    global high_scores
+    with open("high_scores.txt") as list:
+        high_scores = list.read().splitlines()
+        print("\n".join(high_scores))
 
 
 def clear():
@@ -69,18 +66,18 @@ def win_screen():
 
 
 def high_score_handler():
-    global high
     global usable_elapsed_time
     player_name = input("Type in your name to add it to the high scores!: ")
-    new_high_score = [player_name, " | ", str(letters_count), " | ",
-                      usable_elapsed_time, " | ", current_capital, "\n"]
-    print(new_high_score)
-    with open("high_scores.txt", "a") as high_scores:
+    new_high_score = [player_name, " | ", usable_elapsed_time, " | ",
+                      str(letters_count), " | ", current_capital, "\n"]
+    print("".join(new_high_score))
+    with open("high_scores.txt", "a+") as high_scores:
         high_scores.writelines(new_high_score)
 
 
 def try_again():
     global life
+    high_score_screen()
     try_again = input("Do you want to try again? yes/no: ")
     if try_again == "yes" or try_again == "y":
         clear()
