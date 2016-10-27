@@ -5,10 +5,8 @@ global current_capital
 
 
 def file_operator():
-    global current_capital
-    global current_capital_upper
-    global current_country
     global high_scores
+    global countries_and_capitals
 
     try:
         with open("high_scores.txt", "r+") as list:
@@ -20,10 +18,24 @@ def file_operator():
 
     with open("countries_and_capitals.txt") as list:
         countries_and_capitals = list.read().splitlines()
-        choosen_pair = random.choice(countries_and_capitals)
-        current_capital = choosen_pair.split("| ")[1]
-        current_capital_upper = current_capital.upper()
-        current_country = choosen_pair.split("| ")[0]
+
+
+def current_setter():
+    global countries_and_capitals
+    global current_capital
+    global current_capital_upper
+    global current_country
+    choosen_pair = random.choice(countries_and_capitals)
+    current_capital = choosen_pair.split("| ")[1]
+    current_capital_upper = current_capital.upper()
+    current_country = choosen_pair.split(" |")[0]
+
+
+def clear():
+    global life
+    global used_letters
+    used_letters = []
+    life = 5
 
 
 def show_status(current_capital_upper):
@@ -31,29 +43,34 @@ def show_status(current_capital_upper):
     global used_letters
     global life
     current_life()
-    if checker(used_letters, current_capital_upper) is True:
-        win_screen()
-    else:
-        if life == 1:
-            print("It's the capital of", current_country, ";>")
-        for letter in current_capital_upper:
-            if letter in used_letters:
-                print(letter, end="")
-            else:
-                print("_ ", end="")
-        if used_letters:
-            print("  You already tired: ", used_letters)
+    if life == 1:
+        print("It's the capital of", current_country, ";3")
+    for letter in current_capital_upper:
+        if letter in used_letters:
+            print(letter, end="")
+        else:
+            print("_ ", end="")
+    if used_letters:
+        print("  You already tired: ", used_letters)
 
 
 def win_screen():
+    global high_scores
     global letters_count
+    global current_capital
     print("Congratulations! You won using", letters_count, "letters! Nice!")
+    player_name = input("Type in your name to add it to the high scores!: ")
+    new_high_score(player_name, "|", letters_count, "|", current_capital)
+    high_scores.append(new_high_score)
     try_again()
 
 
 def try_again():
+    global life
     try_again = input("Do you want to try again? yes/no: ")
     if try_again == "yes" or try_again == "y":
+        clear()
+        current_setter()
         main()
     elif try_again == "no" or try_again == "n":
         quit()
@@ -113,9 +130,10 @@ def checker(used_letters, current_capital_upper):
 
 def main():
     global life
-    file_operator()
     while True:
         if life > 0:
+            if checker(used_letters, current_capital_upper) is True:
+                win_screen()
             show_status(current_capital_upper)
             input_situation()
         else:
@@ -125,7 +143,8 @@ if __name__ == '__main__':
     used_letters = []
     life = 5
     letters_count = 0
-
+    file_operator()
+    current_setter()
     main()
 
 
