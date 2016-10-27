@@ -1,4 +1,5 @@
 import random
+import time
 import datetime
 
 global current_capital
@@ -55,14 +56,27 @@ def show_status(current_capital_upper):
 
 
 def win_screen():
-    global high_scores
     global letters_count
     global current_capital
-    print("Congratulations! You won using", letters_count, "letters! Nice!")
-    player_name = input("Type in your name to add it to the high scores!: ")
-    new_high_score(player_name, "|", letters_count, "|", current_capital)
-    high_scores.append(new_high_score)
+    global start_time
+    global usable_elapsed_time
+    elapsed_time = time.time() - start_time
+    usable_elapsed_time = str(elapsed_time)[:4]
+    print("Congratulations! You won using", letters_count,
+          "letters! in", usable_elapsed_time, "sec, nice!")
+    high_score_handler()
     try_again()
+
+
+def high_score_handler():
+    global high
+    global usable_elapsed_time
+    player_name = input("Type in your name to add it to the high scores!: ")
+    new_high_score = [player_name, " | ", str(letters_count), " | ",
+                      usable_elapsed_time, " | ", current_capital, "\n"]
+    print(new_high_score)
+    with open("high_scores.txt", "a") as high_scores:
+        high_scores.writelines(new_high_score)
 
 
 def try_again():
@@ -81,7 +95,11 @@ def try_again():
 
 def loose_screen():
     global letters_count
-    print("You lost after using", letters_count, "letters...")
+    global start_time
+    global elapsed_time
+    elapsed_time = time.time() - start_time
+    print("You lost after", str(elapsed_time)[
+          :4], "secs, using", letters_count, "letters...")
     try_again()
 
 
@@ -96,7 +114,7 @@ def letter_input():
     choosen_letter = input("Type in a letter: ").upper()
     if choosen_letter in used_letters:
         print("You already used this letter")
-        letter_input()
+        input_situation()
     else:
         used_letters.append(choosen_letter)
         letters_count += 1
@@ -106,7 +124,7 @@ def letter_input():
 
 def word_input():
     global life
-    choosen_word = input("Type in a word: ")
+    choosen_word = input("Type in a word: ").upper()
     if choosen_word == current_capital_upper:
         win_screen()
     else:
@@ -129,6 +147,8 @@ def checker(used_letters, current_capital_upper):
 
 
 def main():
+    global start_time
+    start_time = time.time()
     global life
     while True:
         if life > 0:
