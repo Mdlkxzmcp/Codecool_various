@@ -4,22 +4,26 @@ global current_capital
 used_letters = []
 life = 5
 
-with open("european_capitals") as list:
-    euro_capitals = list.read().splitlines()
+
+def file_operator():
+    global current_capital
+    global current_capital_upper
+    global current_country
+    with open("countries_and_capitals.txt") as list:
+        countries_and_capitals = list.read().splitlines()
+        choosen_pair = random.choice(countries_and_capitals)
+        current_capital = choosen_pair.split("| ")[1]
+        current_capital_upper = current_capital.upper()
+        current_country = choosen_pair.split("| ")[0]
 
 
-def random_capital(euro_capitals):
-    current_capital = random.choice(euro_capitals)
-    return current_capital
-
-
-def show_status(choosen_capital):
+def show_status(current_capital_upper):
     global used_letters
     current_life()
-    if checker(used_letters, choosen_capital) is True:
+    if checker(used_letters, current_capital_upper) is True:
         win_screen()
     else:
-        for letter in choosen_capital:
+        for letter in current_capital_upper:
             if letter in used_letters:
                 print(letter, end="")
             else:
@@ -30,11 +34,10 @@ def show_status(choosen_capital):
 
 def win_screen():
     print("Congratulations! You won!!!!")
-    quit()
+    try_again()
 
 
-def loose_screen():
-    print("Welp")
+def try_again():
     try_again = input("Do you want to try again? yes/no: ")
     if try_again == "yes" or try_again == "y":
         main()
@@ -42,7 +45,12 @@ def loose_screen():
         quit()
     else:
         print("yes or no")
-        loose_screen()
+        try_again()
+
+
+def loose_screen():
+    print("Welp")
+    try_again()
 
 
 def current_life():
@@ -50,7 +58,7 @@ def current_life():
     print("Remaining life: ", life)
 
 
-def input_situation(choosen_capital):
+def input_situation(current_capital_upper):
     global life
     global used_letters
     choice = input("Do you want to type in a (l)etter or a (w)ord?: ")
@@ -58,40 +66,40 @@ def input_situation(choosen_capital):
         choosen_letter = input("Type in a letter: ").upper()
         if choosen_letter in used_letters:
             print("You already used this letter")
-            input_situation(used_letters, choosen_capital)
+            input_situation(used_letters, current_capital_upper)
         else:
             used_letters.append(choosen_letter)
-        if choosen_letter not in choosen_capital:
+        if choosen_letter not in current_capital_upper:
             life -= 1
-        """if "".join(used_letters) in choosen_capital:
+        """if "".join(used_letters) in current_capital_upper:
             win_screen()"""
     elif choice == "word" or choice == "w":
-        choosen_word = input("Type in a word: ").upper()
-        if choosen_word == choosen_capital:
+        choosen_word = input("Type in a word: ")
+        if choosen_word == current_capital_upper:
             win_screen()
         else:
             life -= 2
     else:
         print("That's not an option.")
-        input_situation(used_letters, choosen_capital)
+        input_situation(used_letters, current_capital_upper)
 
 
-def checker(used_letters, choosen_capital):
-    return set(choosen_capital).issubset(used_letters)
+def checker(used_letters, current_capital_upper):
+    return set(current_capital_upper).issubset(used_letters)
 
 
 def main():
     global life
     global used_letters
-    choosen_capital = random_capital(euro_capitals)
+    file_operator()
     while True:
         if life > 0:
-            show_status(choosen_capital)
-            input_situation(choosen_capital)
+            show_status(current_capital_upper)
+            input_situation(current_capital_upper)
         else:
             loose_screen()
 """
-if input == choosen_capital:
+if input == current_capital_upper:
     print("you won!")
 else:
 """
