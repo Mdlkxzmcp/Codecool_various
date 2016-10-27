@@ -1,4 +1,5 @@
 import random
+import datetime
 
 global current_capital
 used_letters = []
@@ -58,30 +59,36 @@ def current_life():
     print("Remaining life: ", life)
 
 
-def input_situation(current_capital_upper):
+def letter_input():
     global life
-    global used_letters
+    choosen_letter = input("Type in a letter: ").upper()
+    if choosen_letter in used_letters:
+        print("You already used this letter")
+        letter_input()
+    else:
+        used_letters.append(choosen_letter)
+    if choosen_letter not in current_capital_upper:
+        life -= 1
+
+
+def word_input():
+    global life
+    choosen_word = input("Type in a word: ")
+    if choosen_word == current_capital_upper:
+        win_screen()
+    else:
+        life -= 2
+
+
+def input_situation():
     choice = input("Do you want to type in a (l)etter or a (w)ord?: ")
     if choice == "letter" or choice == "l":
-        choosen_letter = input("Type in a letter: ").upper()
-        if choosen_letter in used_letters:
-            print("You already used this letter")
-            input_situation(used_letters, current_capital_upper)
-        else:
-            used_letters.append(choosen_letter)
-        if choosen_letter not in current_capital_upper:
-            life -= 1
-        """if "".join(used_letters) in current_capital_upper:
-            win_screen()"""
+        letter_input()
     elif choice == "word" or choice == "w":
-        choosen_word = input("Type in a word: ")
-        if choosen_word == current_capital_upper:
-            win_screen()
-        else:
-            life -= 2
+        word_input()
     else:
         print("That's not an option.")
-        input_situation(used_letters, current_capital_upper)
+        input_situation()
 
 
 def checker(used_letters, current_capital_upper):
@@ -95,7 +102,7 @@ def main():
     while True:
         if life > 0:
             show_status(current_capital_upper)
-            input_situation(current_capital_upper)
+            input_situation()
         else:
             loose_screen()
 """
