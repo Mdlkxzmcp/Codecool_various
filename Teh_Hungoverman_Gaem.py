@@ -1,7 +1,7 @@
 import random
 
 global current_capital
-global used_letters
+used_letters = []
 life = 5
 
 with open("european_capitals") as list:
@@ -13,7 +13,8 @@ def random_capital(euro_capitals):
     return current_capital
 
 
-def show_status(choosen_capital, used_letters):
+def show_status(choosen_capital):
+    global used_letters
     current_life()
     for letter in choosen_capital:
         if letter in used_letters:
@@ -46,8 +47,9 @@ def current_life():
     print("Remaining life: ", life)
 
 
-def input_situation(used_letters, choosen_capital):
+def input_situation(choosen_capital):
     global life
+    global used_letters
     choice = input("Do you want to type in a (l)etter or a (w)ord?: ")
     if choice == "letter" or choice == "l":
         choosen_letter = input("Type in a letter: ").upper()
@@ -56,10 +58,10 @@ def input_situation(used_letters, choosen_capital):
             input_situation(used_letters, choosen_capital)
         else:
             used_letters.append(choosen_letter)
-        if str(choosen_letter) not in str(choosen_capital):
+        if choosen_letter not in choosen_capital:
             life -= 1
-        if "".join(used_letters) in choosen_capital:
-            win_screen()
+        """if "".join(used_letters) in choosen_capital:
+            win_screen()"""
     elif choice == "word" or choice == "w":
         choosen_word = input("Type in a word: ").upper()
         if choosen_word == choosen_capital:
@@ -73,12 +75,12 @@ def input_situation(used_letters, choosen_capital):
 
 def main():
     global life
+    global used_letters
     choosen_capital = random_capital(euro_capitals)
-    used_letters = []
     while True:
         if life > 0:
-            show_status(choosen_capital, used_letters)
-            input_situation(used_letters, choosen_capital)
+            show_status(choosen_capital)
+            input_situation(choosen_capital)
         else:
             loose_screen()
 """
