@@ -2,14 +2,22 @@ import random
 import datetime
 
 global current_capital
-used_letters = []
-life = 5
 
 
 def file_operator():
     global current_capital
     global current_capital_upper
     global current_country
+    global high_scores
+
+    try:
+        with open("high_scores.txt", "r+") as list:
+            high_scores = list.read().splitlines()
+    # if this fails it makes a new high_scores list!
+    except:
+        with open("high_scores.txt", "a+") as list:
+            high_scores = list.read().splitlines()
+
     with open("countries_and_capitals.txt") as list:
         countries_and_capitals = list.read().splitlines()
         choosen_pair = random.choice(countries_and_capitals)
@@ -19,22 +27,27 @@ def file_operator():
 
 
 def show_status(current_capital_upper):
+    global current_country
     global used_letters
+    global life
     current_life()
     if checker(used_letters, current_capital_upper) is True:
         win_screen()
     else:
+        if life == 1:
+            print("It's the capital of", current_country, ";>")
         for letter in current_capital_upper:
             if letter in used_letters:
                 print(letter, end="")
             else:
                 print("_ ", end="")
         if used_letters:
-            print(used_letters)
+            print("  You already tired: ", used_letters)
 
 
 def win_screen():
-    print("Congratulations! You won!!!!")
+    global letters_count
+    print("Congratulations! You won using", letters_count, "letters! Nice!")
     try_again()
 
 
@@ -50,7 +63,8 @@ def try_again():
 
 
 def loose_screen():
-    print("Welp")
+    global letters_count
+    print("You lost after using", letters_count, "letters...")
     try_again()
 
 
@@ -61,12 +75,14 @@ def current_life():
 
 def letter_input():
     global life
+    global letters_count
     choosen_letter = input("Type in a letter: ").upper()
     if choosen_letter in used_letters:
         print("You already used this letter")
         letter_input()
     else:
         used_letters.append(choosen_letter)
+        letters_count += 1
     if choosen_letter not in current_capital_upper:
         life -= 1
 
@@ -97,7 +113,6 @@ def checker(used_letters, current_capital_upper):
 
 def main():
     global life
-    global used_letters
     file_operator()
     while True:
         if life > 0:
@@ -105,10 +120,13 @@ def main():
             input_situation()
         else:
             loose_screen()
-"""
-if input == current_capital_upper:
-    print("you won!")
-else:
-"""
+
 if __name__ == '__main__':
+    used_letters = []
+    life = 5
+    letters_count = 0
+
     main()
+
+
+"""made by Mdlkxzcmp & BDerus """
