@@ -16,13 +16,16 @@ def random_capital(euro_capitals):
 def show_status(choosen_capital):
     global used_letters
     current_life()
-    for letter in choosen_capital:
-        if letter in used_letters:
-            print(letter, end="")
-        else:
-            print("_ ", end="")
-    if used_letters:
-        print(used_letters)
+    if checker(used_letters, choosen_capital) is True:
+        win_screen()
+    else:
+        for letter in choosen_capital:
+            if letter in used_letters:
+                print(letter, end="")
+            else:
+                print("_ ", end="")
+        if used_letters:
+            print(used_letters)
 
 
 def win_screen():
@@ -71,6 +74,10 @@ def input_situation(choosen_capital):
     else:
         print("That's not an option.")
         input_situation(used_letters, choosen_capital)
+
+
+def checker(used_letters, choosen_capital):
+    return set(choosen_capital).issubset(used_letters)
 
 
 def main():
