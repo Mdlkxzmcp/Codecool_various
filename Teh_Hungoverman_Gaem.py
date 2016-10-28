@@ -55,7 +55,9 @@ def show_status():
     if life == 1:
         print("It's the capital of", current_country, ";3")
     for letter in current_capital_upper:
-        if letter in used_letters:
+        if letter == " ":
+            print(" - ", end="")
+        elif letter in used_letters:
             print(letter, end="")
         else:
             print("_ ", end="")
@@ -131,7 +133,7 @@ def letter_input():
     global life
     global counter
     choosen_letter = input("Type in a letter: ").upper()
-    if len(choosen_letter) == 1:
+    if len(choosen_letter) == 1 and choosen_letter.isalpha():
         counter += 1
         if choosen_letter in used_letters:
             print("You already used this letter")
@@ -167,10 +169,14 @@ def input_situation():
         input_situation()
 
 
-def checker(used_letters, current_capital_upper):
+def checker(current_capital_upper):
+    global used_letters
     """checker(list, string) checks if values from list are all present in
     the string and then returns a boolean"""
-    return set(current_capital_upper).issubset(used_letters)
+    used_letters.append(" ")
+    state = set(current_capital_upper).issubset(used_letters)
+    used_letters.remove(" ")
+    return state
 
 
 def main():
@@ -181,7 +187,7 @@ def main():
     while True:
         if life > 0:
             # this calles the win screen if the user guessed the word :>
-            if checker(used_letters, current_capital_upper) is True:
+            if checker(current_capital_upper) is True:
                 win_screen()
             show_status()
             input_situation()
