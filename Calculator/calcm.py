@@ -42,23 +42,23 @@ def question_handler():
 # making use of classes here just for fun
 class Math_Functions:
 
+    def __init__(self, num1, num2):
+        self.num1 = num1
+        self.num2 = num2
+
     def adding(num1, num2):
-        global result
         result = num1 + num2
         print("Result: " + format(result))
 
     def subtracting(num1, num2):
-        global result
         result = num1 - num2
         print("Result: " + format(result))
 
     def multiplying(num1, num2):
-        global result
         result = num1 * num2
         print("Result: " + format(result))
 
     def dividing(num1, num2):
-        global result
         result = num1 / num2
         print("Result: " + format(result))
 
@@ -67,8 +67,9 @@ def main():
     """the main function first calls question_handler and then uses its output
         to call the Math_Functions functions"""
     question_handler()
+    calc = Math_Functions(num1, num2)
     if(decision in adding_list):
-        Math_Functions.adding(num1, num2)
+        calc.adding()
     elif(decision in subtracting_list):
         Math_Functions.subtracting(num1, num2)
     elif(decision in multiplying_list):
