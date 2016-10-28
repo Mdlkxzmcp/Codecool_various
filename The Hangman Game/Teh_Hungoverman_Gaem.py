@@ -139,7 +139,8 @@ def win_screen():
     elapsed_time = time.time() - start_time
     usable_elapsed_time = str(elapsed_time)[:4]
     print("Congratulations! You remembered after", counter,
-          "tries! in", usable_elapsed_time, "sec, nice!")
+          "tries! in", usable_elapsed_time, "sec, nice!\n"
+          "Last night was indeed crazy, you better call your wife... o.o")
     high_score_handler()
     try_again()
 
