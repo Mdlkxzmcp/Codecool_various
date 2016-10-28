@@ -36,6 +36,15 @@ def current_setter():
     current_country = choosen_pair.split(" |")[0]
 
 
+def start_screen():
+    print("\n            Welcome to Teh Hungoverman Gaem\n"
+          "\nYou wake up, surrounded by "
+          "alien grounds you realize that your head hurts like a mofo.\n"
+          "Stored deep in your memory is the name of a capital that holds the "
+          "key to realizing where you are.\nYou gotta hurry though, you feel "
+          "like this memory is about to fade out!!!\n")
+
+
 def checker(current_capital_upper):
     global used_letters
     """checker(list, string) checks if values from list are all present in
@@ -47,13 +56,13 @@ def checker(current_capital_upper):
 
 
 def input_situation():
-    choice = input("Do you want to type in a (l)etter or a (w)ord?: ")
+    choice = input("Do you want to try a (l)etter or a (w)ord?: ")
     if choice == "letter" or choice == "l":
         letter_input()
     elif choice == "word" or choice == "w":
         word_input()
     else:
-        print("That's not an option.")
+        print("Wait what?")
         input_situation()
 
 
@@ -71,7 +80,7 @@ def letter_input():
         if choosen_letter not in current_capital_upper:
             life -= 1
     else:
-        print("letters please!")
+        print("letters brain, letters, please!")
         letter_input()
 
 
@@ -79,11 +88,15 @@ def word_input():
     global life
     global counter
     choosen_word = input("Type in a word: ").upper()
-    counter += 1
-    if choosen_word == current_capital_upper:
-        win_screen()
+    if len(choosen_word) > 2:
+        counter += 1
+        if choosen_word == current_capital_upper:
+            win_screen()
+        else:
+            life -= 2
     else:
-        life -= 2
+        print("Wait.. No, what? Ok, one more time...")
+        word_input()
 
 
 def show_status():
@@ -95,22 +108,24 @@ def show_status():
     global life
     current_life()
     if life == 1:
-        print("It's the capital of", current_country, ";3")
+        print("It's the capital of %s !" % current_country)
+    print("? ", end="")
     for letter in current_capital_upper:
         if letter == " ":
-            print(" - ", end="")
+            print("  ", end="")
         elif letter in used_letters:
             print(letter, end="")
         else:
-            print("_ ", end="")
+            print(" _", end="")
+    print("  ?\n")
     if used_letters:
-        print("  You already tired: ", used_letters)
+        print("  You already tried: ", used_letters)
 
 
 def current_life():
     """shows remaining life"""
     global life
-    print("Remaining life: ", life)
+    print("Remaining tries before you forget: ", life)
 
 
 def win_screen():
@@ -123,7 +138,7 @@ def win_screen():
     global usable_elapsed_time
     elapsed_time = time.time() - start_time
     usable_elapsed_time = str(elapsed_time)[:4]
-    print("Congratulations! You won after", counter,
+    print("Congratulations! You remembered after", counter,
           "tries! in", usable_elapsed_time, "sec, nice!")
     high_score_handler()
     try_again()
@@ -136,13 +151,13 @@ def loose_screen():
     global start_time
     global elapsed_time
     elapsed_time = time.time() - start_time
-    print("You lost after", str(elapsed_time)[
-          :4], "secs, after", counter, "tries...")
+    print("""You forgot and are now lost for good. It took you {} secs and {}
+    guesses to finally forget...""".format(str(elapsed_time)[:4], counter))
     try_again()
 
 
 def try_again():
-    """asks if the user wants to try/play again and depending on the decision
+    """asks if the user wants to try / play again and depending on the decision
     either starts a new game by calling clear, current_setter & main
     functions or quits the program"""
     global life
@@ -167,8 +182,8 @@ def high_score_handler():
     day = datetime.datetime.now()
     new_high_score = [player_name, " | ", day.strftime(
         "%Y-%m-%d"), " | ", usable_elapsed_time, " | ", str(counter), " | ",
-        current_capital, " | ", "\n"]
-    print("Your score is: ".join(new_high_score))
+        current_capital, "\n"]
+    print("".join(new_high_score))
     with open("high_scores.txt", "a+") as high_scores:
         high_scores.writelines(new_high_score)
 
@@ -183,6 +198,7 @@ def high_score_screen():
 
 def main():
     global start_time
+    start_screen()
     # ready... set... go!!!
     start_time = time.time()
     global life
