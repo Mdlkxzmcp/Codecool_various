@@ -74,7 +74,7 @@ def letter_input():
         counter += 1
         if choosen_letter in used_letters:
             print("You already used this letter")
-            input_situation()
+            letter_input()
         else:
             used_letters.append(choosen_letter)
         if choosen_letter not in current_capital_upper:
@@ -108,7 +108,7 @@ def show_status():
     global life
     current_life()
     if life == 1:
-        print("It's the capital of %s !" % current_country)
+        print("\nOh! It's the capital of %s\n!" % current_country)
     print("? ", end="")
     for letter in current_capital_upper:
         if letter == " ":
@@ -137,9 +137,9 @@ def win_screen():
     global start_time
     global usable_elapsed_time
     elapsed_time = time.time() - start_time
-    usable_elapsed_time = str(elapsed_time)[:4]
-    print("Congratulations! You remembered after", counter,
-          "tries! in", usable_elapsed_time, "sec, nice!\n"
+    usable_elapsed_time = str(elapsed_time)[:5]
+    print("\n\nCongratulations! You remembered after", counter,
+          "tries in", usable_elapsed_time, "secs, nice!\n"
           "Last night was indeed crazy, you better call your wife... o.o")
     high_score_handler()
     try_again()
@@ -152,8 +152,8 @@ def loose_screen():
     global start_time
     global elapsed_time
     elapsed_time = time.time() - start_time
-    print("""You forgot and are now lost for good. It took you {} secs and {}
-    guesses to finally forget...""".format(str(elapsed_time)[:4], counter))
+    print("\nYou forgot and are now lost for good. "
+          "It took you {} secs and {} guesses to finally forget...".format(str(elapsed_time)[:4], counter))
     try_again()
 
 
@@ -162,8 +162,9 @@ def try_again():
     either starts a new game by calling clear, current_setter & main
     functions or quits the program"""
     global life
+    print("")
     high_score_screen()
-    try_again = input("Do you want to play again? yes/no: ")
+    try_again = input("\nDo you want to play again? yes/no: ")
     if try_again == "yes" or try_again == "y":
         clear()
         current_setter()
