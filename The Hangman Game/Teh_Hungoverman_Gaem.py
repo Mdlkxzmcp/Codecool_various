@@ -137,7 +137,7 @@ def win_screen():
     global start_time
     global usable_elapsed_time
     elapsed_time = time.time() - start_time
-    usable_elapsed_time = str(elapsed_time)[:5]
+    usable_elapsed_time = str(int(round(elapsed_time)))
     print("\n\nCongratulations! You remembered after", counter,
           "tries in", usable_elapsed_time, "secs, nice!\n"
           "Last night was indeed crazy, you better call your wife... o.o")
