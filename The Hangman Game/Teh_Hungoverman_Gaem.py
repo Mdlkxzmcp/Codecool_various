@@ -137,7 +137,7 @@ def win_screen():
     global start_time
     global usable_elapsed_time
     elapsed_time = time.time() - start_time
-    usable_elapsed_time = str(int(round(elapsed_time)))
+    usable_elapsed_time = str(round(elapsed_time))
     print("\n\nCongratulations! You remembered after", counter,
           "tries in", usable_elapsed_time, "secs, nice!\n"
           "Last night was indeed crazy, you better call your wife... o.o")
@@ -150,10 +150,10 @@ def loose_screen():
     and calls the try again function"""
     global counter
     global start_time
-    global elapsed_time
-    elapsed_time = time.time() - start_time
-    print("\nYou forgot and are now lost for good. "
-          "It took you {} secs and {} guesses to finally forget...".format(str(elapsed_time)[:4], counter))
+    elapsed_time = round((time.time() - start_time))
+    print("\nYou forgot and are now lost for good.\n"
+          "It took you %d secs and %s to" % (elapsed_time, counter), end="")
+    print("to finally forget...")
     try_again()
 
 
