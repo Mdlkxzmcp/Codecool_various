@@ -17,7 +17,11 @@ while True:
         print((lambda num1, num2: num1 - num2)(num1, num2))
     elif (operator == "*"):
         print((lambda num1, num2: num1 * num2)(num1, num2))
-    elif (operator == "/"):
-        print((lambda num1, num2: num1 / num2)(num1, num2))
+    elif (operator == "/" or operator == "//"):
+        print((lambda num1, num2: num1 // num2)(num1, num2))
+    elif (operator == "%"):
+        print((lambda num1, num2: num1 % num2)(num1, num2))
+    elif (operator == "**"):
+        print((lambda num1, num2: num1 ** num2)(num1, num2))
     else:
         print("Invalid operator")
