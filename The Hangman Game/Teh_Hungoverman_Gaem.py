@@ -193,6 +193,9 @@ def high_score_handler():
 def high_score_screen():
     """displays the current high scores!"""
     global high_scores
+    print(r"""\│/\│/\│/  ╦ ╦╦╔═╗╦ ╦  ╔═╗╔═╗╔═╗╦═╗╔═╗╔═╗  \│/\│/\│/
+─ ── ── ─  ╠═╣║║ ╦╠═╣  ╚═╗║  ║ ║╠╦╝║╣ ╚═╗  ─ ── ── ─
+/│\/│\/│\  ╩ ╩╩╚═╝╩ ╩  ╚═╝╚═╝╚═╝╩╚═╚═╝╚═╝  /│\/│\/│\ """)
     with open("high_scores.txt") as list:
         high_scores = list.read().splitlines()
         print("\n".join(high_scores))
