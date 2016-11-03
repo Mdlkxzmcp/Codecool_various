@@ -51,8 +51,8 @@ def close():
 
 def main():
     while True:
-        options = ("list,", "add,", "mark,", "archive")
-        choice = input("Please specify a command {0}: ".format(options))
+        OPTIONS = ("list,", "add,", "mark,", "archive")
+        choice = input("Please specify a command {0}: ".format(OPTIONS))
         if (choice == "list"):
             list_function()
         elif (choice == "add"):

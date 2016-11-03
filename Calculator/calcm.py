@@ -1,7 +1,7 @@
-adding_list = ["+", "plus", "add"]
-subtracting_list = ["-", "minus", "subtract"]
-multiplying_list = ["*", "multiply"]
-dividing_list = ["/", "divide"]
+ADDING_LIST = ("+", "plus", "add")
+SUBTRACTING_LIST = ("-", "minus", "subtract")
+MULTIPLYING_LIST = ("*", "multiply", "times")
+DIVIDING_LIST = ("/", "divide")
 
 
 def question_handler():
@@ -18,16 +18,16 @@ def question_handler():
         else:
             break
     while True:
-        all_operations = ["+", "plus", "add", "-", "minus", "subtract", "*",
-                          "multiply", "/", "divide"]
+        ALL_OPERATIONS = ("+", "plus", "add", "-", "minus", "subtract", "*",
+                          "multiply", "times", "/", "divide")
         decision = input("Enter desired operation: ")
         if(decision == "quit"):
             quit()
-        elif(decision in all_operations):
+        elif(decision in ALL_OPERATIONS):
             break
         else:
             print('This is not a valid operation here, choose one: ', end="")
-            print(all_operations, end="")
+            print(ALL_OPERATIONS, end="")
             print(" or type in \"quit\" to exit")
     while True:
         try:
@@ -40,11 +40,7 @@ def question_handler():
 
 
 # making use of classes here just for fun
-class Math_Functions:
-
-    def __init__(self, num1, num2):
-        self.num1 = num1
-        self.num2 = num2
+class MathFunctions:
 
     def adding(num1, num2):
         result = num1 + num2
@@ -65,17 +61,17 @@ class Math_Functions:
 
 def main():
     """the main function first calls question_handler and then uses its output
-        to call the Math_Functions functions"""
+        to call the MathFunctions functions"""
     question_handler()
-    calc = Math_Functions(num1, num2)
-    if(decision in adding_list):
-        calc.adding()
-    elif(decision in subtracting_list):
-        Math_Functions.subtracting(num1, num2)
-    elif(decision in multiplying_list):
-        Math_Functions.multiplying(num1, num2)
-    elif(decision in dividing_list):
-        Math_Functions.dividing(num1, num2)
+    calc = MathFunctions(num1, num2)
+    if(decision in ADDING_LIST):
+        MathFunctions.adding(num1, num2)
+    elif(decision in SUBTRACTING_LIST):
+        MathFunctions.subtracting(num1, num2)
+    elif(decision in MULTIPLYING_LIST):
+        MathFunctions.multiplying(num1, num2)
+    elif(decision in DIVIDING_LIST):
+        MathFunctions.dividing(num1, num2)
     else:
         print("Unexpected situation, calling mentors...")
 

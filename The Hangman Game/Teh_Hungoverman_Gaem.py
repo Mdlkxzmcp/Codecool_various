@@ -226,4 +226,4 @@ if __name__ == '__main__':
     main()
 
 
-"""made by Mdlkxzcmp & BDerus aka Maximiliaan Strother III & Bartek Deruś"""
+"""made by Mdlkxzcmp & bderus aka Maximiliaan Strother III & Bartek Deruś"""
