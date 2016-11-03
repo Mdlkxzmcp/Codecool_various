@@ -1,7 +1,7 @@
 ADDING_LIST = ("+", "plus", "add")
 SUBTRACTING_LIST = ("-", "minus", "subtract")
 MULTIPLYING_LIST = ("*", "multiply", "times")
-DIVIDING_LIST = ("/", "divide")
+DIVIDING_LIST = ("/", "//", "divide")
 
 
 def question_handler():
@@ -19,7 +19,7 @@ def question_handler():
             break
     while True:
         ALL_OPERATIONS = ("+", "plus", "add", "-", "minus", "subtract", "*",
-                          "multiply", "times", "/", "divide")
+                          "multiply", "times", "/", "//", "divide")
         decision = input("Enter desired operation: ")
         if(decision == "quit"):
             quit()
@@ -55,7 +55,11 @@ class MathFunctions:
         print("Result: " + format(result))
 
     def dividing(num1, num2):
-        result = num1 / num2
+        try:
+            result = num1 / num2
+        except ZeroDivisionError:
+            print(r"Life tip nr 42: 'never, ever, neeeever divide by zero.'")
+            quit()
         print("Result: " + format(result))
 
 
@@ -63,7 +67,6 @@ def main():
     """the main function first calls question_handler and then uses its output
         to call the MathFunctions functions"""
     question_handler()
-    calc = MathFunctions(num1, num2)
     if(decision in ADDING_LIST):
         MathFunctions.adding(num1, num2)
     elif(decision in SUBTRACTING_LIST):
