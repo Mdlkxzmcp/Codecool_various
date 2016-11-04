@@ -8,19 +8,24 @@ loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
 def import_inventory(inventory, filename):
     """imports a given csv file and writes its items to the inventory
     dictionary"""
-
-    with open(filename) as csv_inventory:
-        csv_inv = csv.reader(csv_inventory, quotechar=",")
-        next(csv_inv)
-        for key, value in dict(csv_inv).items():
-            if key in inventory:
-                inventory[key] = int(value)
-            elif key not in inventory:
-                inventory.setdefault(key, int(value))
-            else:
-                print("woot woot send help")
-        print("Import sucessful :>")
-        return inventory
+    try:
+        with open(filename) as csv_inventory:
+            csv_inv = csv.reader(csv_inventory, quotechar=",")
+            next(csv_inv)
+            for key, value in dict(csv_inv).items():
+                if key in inventory:
+                    inventory[key] = int(value)
+                elif key not in inventory:
+                    inventory.setdefault(key, int(value))
+                else:
+                    print("woot woot send help")
+    except FileNotFoundError:
+        print("File doesn't exist, creating a new one")
+        with open(filename, "w") as csv_inventory:
+            writer = csv.writer(csv_inventory)
+            writer.writerow(('item_name', 'count'))
+    print("Import sucessful :>")
+    return inventory
 
 
 def display_inventory(inventory):
@@ -108,9 +113,11 @@ Oh and btw, type using lowercase letters for perfect experience""")
 def main():
     print("\n        Welcome to The Inventory!\n")
     help()
+
     while True:
         choice = input("\n\nSo what will it be?: ").lower()
         print("\n")
+
         if choice in ("import", "i", "imp"):
             import_inventory(inv, "import_inventory.csv")
         elif choice in ("add", "a"):
@@ -135,7 +142,9 @@ def main():
             return False
         else:
             print("This isn't a valid option, try again~")
+
         time.sleep(1.2)
 
+# to do for git: file imp and exp choice, maybe some cuts
 if __name__ == '__main__':
     main()
