@@ -10,7 +10,7 @@ def import_inventory(inventory, filename):
         next(csv_inv)
         for key, value in dict(csv_inv).items():
             if key in inventory:
-                inventory[key] += int(value)
+                inventory[key] = int(value)
             elif key not in inventory:
                 inventory.setdefault(key, int(value))
             else:
@@ -79,7 +79,14 @@ def print_table(inventory, order):
 
 
 def export_inventory(inventory, filename):
-    print(booty)
+    """exports the inventory to a given csv file, if it doesn't exist then
+    it gets created"""
+
+    with open(filename, "w") as csv_inventory:
+        writer = csv.writer(csv_inventory)
+        writer.writerow(('item_name', 'count'))
+        for key, value in inventory.items():
+            writer.writerow([key, value])
 
 
 def main():
