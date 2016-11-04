@@ -1,4 +1,8 @@
 import csv
+import time
+
+inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
+loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
 
 
 def import_inventory(inventory, filename):
@@ -15,6 +19,7 @@ def import_inventory(inventory, filename):
                 inventory.setdefault(key, int(value))
             else:
                 print("woot woot send help")
+        print("Import sucessful :>")
         return inventory
 
 
@@ -45,7 +50,7 @@ def add_to_inventory(inventory, items):
             inventory.setdefault(key, value)
         else:
             print("woot woot send help")
-
+    print("Loot was added :3")
     return inventory
 
 
@@ -61,19 +66,16 @@ def print_table(inventory, order):
         sort = True
     elif order == "count,asc":
         sort = False
-    else:
-        print("Not now .-.")  # if order is typed in wrong sorting is ascending
-        sort = False
 
-    print("Inventory:")
+    print("\nInventory:")
     print("{:>7}{:>{}}".format("count", "item name", longest_val + 1))
     print(formula_for_the_line)
-    # ------------------------- made by the formula_for_the_line
+    # -------------------------  is made by the formula_for_the_line
     for key, value in sorted(inventory.items(),
                              key=lambda val: val[1], reverse=sort):
         print("{:{}d} {:>{}}".format(value, count_width - 1, key, longest_val))
         total_number_of_items += value
-    # ------------------------- again made by the formula_for_the_line
+    # ------------------------- same here
     print(formula_for_the_line)
     print("Total number of items: {}".format(total_number_of_items))
 
@@ -87,16 +89,53 @@ def export_inventory(inventory, filename):
         writer.writerow(('item_name', 'count'))
         for key, value in inventory.items():
             writer.writerow([key, value])
+    print("Inventory sucessfuly exported!")
+
+
+def help():
+    print("""
+Here's what you can do here:\n
+'import' an inventory from a file,
+'add' some premade loot to the inventory,
+'print' the inventory in order of your choice,
+'display' it without any fireworks,
+'export' the inventory to a file,
+'help' will show this once again,
+and once you're done you can type 'quit' to exit. ;>
+Oh and btw, type using lowercase letters for perfect experience""")
 
 
 def main():
-    inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
-    loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
-
-    import_inventory(inv, "import_inventory.csv")
-    add_to_inventory(inv, loot)
-    print_table(inv, "count,desc")
-    export_inventory(inv, "import_inventory.csv")
+    print("\n        Welcome to The Inventory!\n")
+    help()
+    while True:
+        choice = input("\n\nSo what will it be?: ").lower()
+        print("\n")
+        if choice in ("import", "i", "imp"):
+            import_inventory(inv, "import_inventory.csv")
+        elif choice in ("add", "a"):
+            add_to_inventory(inv, loot)
+        elif choice in ("print", "p"):
+            order = input("Do you want 'descending' order or 'ascending'?: ")
+            if order in ("descending", "desc", "d"):
+                print_order = "count,desc"
+            elif order in ("ascending", "asc", "a"):
+                print_order = "count,asc"
+            else:
+                print("This isn't a valid order. :< Setting order to default.")
+                print_order = "count,desc"
+            print_table(inv, print_order)
+        elif choice in ("display", "dis", "d"):
+            display_inventory(inv)
+        elif choice in ("export", "exp", "e"):
+            export_inventory(inv, "import_inventory.csv")
+        elif choice in ("help", "h", "halp"):
+            help()
+        elif choice in ("quit", "exit", "q"):
+            return False
+        else:
+            print("This isn't a valid option, try again~")
+        time.sleep(1.2)
 
 if __name__ == '__main__':
     main()
