@@ -19,7 +19,7 @@ while True:
         print((lambda num1, num2: num1 * num2)(num1, num2))
     elif (operator == "/" or operator == "//"):
         try:
-            print((lambda num1, num2: num1 // num2)(num1, num2))
+            print((lambda num1, num2: num1 / num2)(num1, num2))
         except ZeroDivisionError:
             print("DIVISION BY ZERO. CALLING SPECIAL FORCES.")
     elif (operator == "%"):

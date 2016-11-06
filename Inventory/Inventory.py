@@ -76,9 +76,10 @@ def print_table(inventory, order):
     print("{:>7}{:>{}}".format("count", "item name", longest_val + 1))
     print(formula_for_the_line)
     # -------------------------  is made by the formula_for_the_line
-    for key, value in sorted(inventory.items(),
-                             key=lambda val: val[1], reverse=sort):
-        print("{:{}d} {:>{}}".format(value, count_width - 1, key, longest_val))
+    for key, value in sorted(inventory.items(), key=lambda val: val[1],
+                             reverse=sort):
+        print("{:{}d} {:>{}}".format(value, count_width - 1, key,
+                                     longest_val))
         total_number_of_items += value
     # ------------------------- same here
     print(formula_for_the_line)
@@ -142,6 +143,7 @@ def main():
             return False
         else:
             print("This isn't a valid option, try again~")
+            help()
 
         time.sleep(1.2)
 
