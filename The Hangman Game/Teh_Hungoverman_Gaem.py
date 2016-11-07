@@ -196,9 +196,12 @@ def high_score_screen():
     print(r"""\│/\│/\│/  ╦ ╦╦╔═╗╦ ╦  ╔═╗╔═╗╔═╗╦═╗╔═╗╔═╗  \│/\│/\│/
 ─ ── ── ─  ╠═╣║║ ╦╠═╣  ╚═╗║  ║ ║╠╦╝║╣ ╚═╗  ─ ── ── ─
 /│\/│\/│\  ╩ ╩╩╚═╝╩ ╩  ╚═╝╚═╝╚═╝╩╚═╚═╝╚═╝  /│\/│\/│\ """)
-    with open("high_scores.txt") as list:
-        high_scores = list.read().splitlines()
-        print("\n".join(high_scores))
+    try:
+        with open("high_scores.txt") as list:
+            high_scores = list.read().splitlines()
+            print("\n".join(high_scores))
+    except FileNotFoundError:
+        print("No one remembered o.o")
 
 
 def main():
