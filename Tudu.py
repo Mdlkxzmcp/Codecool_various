@@ -46,10 +46,18 @@ def close():
     with open("the_list.txt", "w+") as list:
         for item in the_list:
             list.write(str(item) + "\n")
-    quit()
+    return False
 
 
 def main():
+    # the program first tries to open the file containing the_list
+    try:
+        with open("the_list.txt", "r+") as list:
+            the_list = list.read().splitlines()
+    # if it fails it makes a new one! Then  the main() is called
+    except:
+        with open("the_list.txt", "a+") as list:
+            the_list = list.read().splitlines()
     while True:
         OPTIONS = ("list,", "add,", "mark,", "archive")
         choice = input("Please specify a command {0}: ".format(OPTIONS))
@@ -61,18 +69,10 @@ def main():
             mark()
         elif (choice == "archive"):
             archive()
-        elif (choice == "x"):
+        elif (choice in ("x", "q", "quit", "exit", "close")):
             close()
         else:
             print("I'll add this option to my list!")
 
 if __name__ == '__main__':
-    # the program first tries to open the file containing the_list
-    try:
-        with open("the_list.txt", "r+") as list:
-            the_list = list.read().splitlines()
-    # if it fails it makes a new one! Then  the main() is called
-    except:
-        with open("the_list.txt", "a+") as list:
-            the_list = list.read().splitlines()
     main()
