@@ -11,20 +11,20 @@ while True:
     operator = input("Enter an operator: ")
     num2 = numbers("Enter another number: ")
 
-    if (operator == "+"):
+    if operator == "+":
         print((lambda num1, num2: num1 + num2)(num1, num2))
-    elif (operator == "-"):
+    elif operator == "-":
         print((lambda num1, num2: num1 - num2)(num1, num2))
-    elif (operator == "*"):
+    elif operator == "*":
         print((lambda num1, num2: num1 * num2)(num1, num2))
-    elif (operator == "/" or operator == "//"):
+    elif operator == "/" or operator == "//":
         try:
             print((lambda num1, num2: num1 / num2)(num1, num2))
         except ZeroDivisionError:
             print("DIVISION BY ZERO. CALLING SPECIAL FORCES.")
-    elif (operator == "%"):
+    elif operator == "%":
         print((lambda num1, num2: num1 % num2)(num1, num2))
-    elif (operator == "**"):
+    elif operator == "**":
         print((lambda num1, num2: num1 ** num2)(num1, num2))
     else:
         print("Invalid operator")

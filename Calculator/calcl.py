@@ -34,21 +34,21 @@ def numbers(prompt):
 
 while True:
 
-    num1 = numbers("Enter a number(or a letter to exit): ")
+    first_number = numbers("Enter a number(or a letter to exit): ")
     operator = input("Enter an operator: ")
-    num2 = numbers("Enter another number: ")
+    second_number = numbers("Enter another number: ")
 
-    if (operator == "+"):
-        add(num1, num2)
-    elif (operator == "-"):
-        subtract(num1, num2)
-    elif (operator == "*"):
-        multiply(num1, num2)
-    elif (operator == "/" or operator == "//"):
-        divide(num1, num2)
-    elif (operator == "%"):
-        reminder(num1, num2)
-    elif (operator == "**"):
-        power(num1, num2)
+    if operator == "+":
+        add(first_number, second_number)
+    elif operator == "-":
+        subtract(first_number, second_number)
+    elif operator == "*":
+        multiply(first_number, second_number)
+    elif operator == "/" or operator == "//":
+        divide(first_number, second_number)
+    elif operator == "%":
+        reminder(first_number, second_number)
+    elif operator == "**":
+        power(first_number, second_number)
     else:
         print("Invalid operator")
