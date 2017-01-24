@@ -84,7 +84,7 @@ Pokéballs_set = set(Pokéballs.items())  # or the key-value pairs
 """ errors """
 #
 #
-# causing an error (best if exepted) to show up with a custom print ++
+# causing an error (best if expected) to show up with a custom print++
 
 
 class MySpecialError(ZeroDivisionError):
@@ -252,17 +252,25 @@ print(*z)
 new_L1, new_L2 = zip(*z)
 print(new_L1, new_L2)
 # (1, 2, 3, 4) ('a', 'b', 'c', 'd')
-# if you understand why this works you really do get iterators!
+# If you understand why this works you really do get iterators!
+# Now, the zip function can cause unexpected situations due to the way it determines the length by the shortest
+#   iterable. If this behaviour is something you want to avoid, there is an alternative called zip_longest:
+from itertools import zip_longest
+L1 = (1, 2, 3, 4, 5, 6, 7)
+L2 = ('a', 'b', 'c', 'd')
+z = zip_longest(L1, L2)
+print(*z)
+# (1, 'a') (2, 'b') (3, 'c') (4, 'd') (5, None) (6, None) (7, None)
 #
 #
 " map "
 #
-square = lambda x: x ** 2
+square = lambda x: x ** 2  # (Such a way of creating functions should be avoided, here it's just for demonstration)
 for val in map(square, range(10)):  # the map iterator takes a function and applies it to the values
     print(val, end=' ')               # in an iterator
 # 0 1 4 9 16 25 36 49 64 81   # find the title 10 square numbers
 #
-print(*map(lambda x: x ** 2, range(10)))  # this does exacly the same thing as the example above
+print(*map(lambda x: x ** 2, range(10)))  # this does exactly the same thing as the example above
 #
 #
 " filter "
@@ -303,7 +311,7 @@ print(*p)
 #
 # Lets start with an example:
 L = []
-for val in range(20):  # The resulf of this is a list of numbers that exclude multiples of 3.
+for val in range(20):  # The result of this is a list of numbers that exclude multiples of 3.
     if val % 3:
         L.append(val)
 L
@@ -328,8 +336,8 @@ L
 # [1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19]
 # This can be read as "construct a list of values for each value up to 20, but only if the value is not divisible by 3"
 #
-# Furthermore you can have multiple iterations by adding another iterators within the comprehension!:
-[(i, j) for i in range(6) for j in range(7) if i % 2 > 0 and j % 3 == 0]
+# Furthermore you can have multiple iterations by adding another iterators within the comprehension:
+[(i, j) for i in range(6) for j in range(7) if i % 2 > 0 and j % 3 == 0]  # This is, however, quite unreadable!
 # [(1, 3), (1, 6), (3, 0), (3, 3), (3, 6), (5, 0), (5, 3), (5, 6)]
 #
 #
@@ -410,7 +418,7 @@ for n in G:
 " generator functions "
 #
 #
-< work in progress >
+# ///////WIP/////////
 ##############################
 
 
@@ -438,6 +446,13 @@ def to_bytes(bytes_or_str):
     else:
         value = bytes_or_str
     return value  # Instance of bytes
+#
+# Another thing to remember is that the file handlers (open function) default to utf-8 encoding in Python 3.
+# That means that when you want to write binary data to a file you should use 'wb' instead of 'w', etc. An example:
+import os
+with open('/tmp/random.bin', 'wb') as f:
+    f.write(os.random(10))
+# If 'w' was used instead a TypeError would happen.
 #
 #
 ##############################
@@ -504,17 +519,19 @@ def is_isogram(string):
 #
 l = [(2, 4), (6, 8), (10, 12)]
 for tup in l:
-    print tup
+    print(tup)
 # (2, 4) (6, 8) (10, 12)
 # Now with unpacking!
 for (t1, t2) in l:
-    print t1
+    print(t1)
 # 2 6 10
 #
 #
 ###########################
 
-""" ~Inspired and heavly influenced by the book "A Whirlwind Tour of Python" by Jake VanderPlas,
-    ~the 'important notes' section is mostly a loose copy of fragments of the book "Effective Python: 59 Specific Ways
-        to Write Better Python" by Brett Slatkin,
-    ~some parts were provided by the wonderful stackoverflow community """
+"""
+    Inspired and heavily influenced by the book "A Whirlwind Tour of Python" by Jake VanderPlas.
+    The 'important notes' section is mostly a loose copy of fragments of the book "Effective Python: 59 Specific Ways
+        to Write Better Python" by Brett Slatkin.
+    Some parts were provided by the wonderful Stackoverflow community
+                                                                        """
