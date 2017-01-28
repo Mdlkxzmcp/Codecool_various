@@ -1,0 +1,42 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+	<meta charset="UTF-8">
+	<title>///////</title>
+</head>
+<body>
+
+	<nav class="navbar">
+		<a href="/">
+			<img src="{% static 'images/WaifuTracker.png' %}" alt="WaifuTracker Logo">
+		</a>
+	</nav>
+
+	<header>
+		<h1>WaifuTracker</h1>
+	</header>
+
+	<main>
+		{% for waifu in waifus %}
+		<section class="waifu">
+			<figure><figcaption>{{ waifu.name }} from {{ waifu.series }}</figcaption>
+			{% if waifu.img_url %}
+				<img src="{{ waifu.img_url }}" />
+			{% endif %}
+
+			<p>{{ waifu.rating }}</p>
+			<p>{{ waifu.height }} cm</p>
+			{% if waifu.waifu_of_the_month %}
+				<p>{{ waifu.name }} is the current waifu of the month</p>
+			{% endif %}
+				<br>
+			</figure>
+		</section>
+		{% endfor %}
+	</main>
+</body>
+</html>

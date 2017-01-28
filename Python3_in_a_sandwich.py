@@ -461,6 +461,20 @@ with open('/tmp/random.bin', 'wb') as f:
 """ cool stuff really aka various examples """
 #
 #
+
+
+def my_insides():
+    sam = "Jolly Boy"
+    twist = 1.34
+    return locals()  # {'sam': 'Jolly Boy', 'twist': 1.34}
+
+
+def sam_how_are_you():
+    sam = 'Been better'
+    return locals()['sam']  # 'Been better'
+# You can do the same thing with globals() which returns the global variables!
+#
+#
 person = {}
 
 properties = [
