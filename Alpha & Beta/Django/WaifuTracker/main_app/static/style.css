@@ -1,3 +1,52 @@
-h1 {
-color: green;
+html, body, h1, h2, h3, h4, ul, ol, li, p, a, div, footer {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  font: inherit;
+  font-size: 100%;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: Helvetica, sans-serif;
+  font-size: 62.5%; /* 1em = 10px */
+  background: #E6E6FA	 url(images/background1.jpg) repeat;
+}
+
+main {
+    text-align: center;
+}
+
+section {
+  padding: 1.12857143% 0 1.2857143% 0;
+  background: rgba(255,228,225,0.6);
+  margin: auto;
+  width: 40%;
+  border-radius: 2%;
+}
+
+.waifu header {
+  padding: 0 4.5% 0 4.5%;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.waifu img {
+  padding-right: 3%;
+  max-width: 100%;
+  border-radius: 5%;
+  margin-bottom: 1%;
+}
+
+.waifu h2 {
+  padding: 0.4444%;
+}
+
+table {
+  padding: 0.4%;
+  margin: auto;
+  background: rgba(240,255,225,0.9);
 }
