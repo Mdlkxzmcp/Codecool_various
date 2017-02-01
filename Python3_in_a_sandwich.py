@@ -2,7 +2,8 @@
 """ A .py file showing various important parts of Python as well as those that are just cool :3
 pep8 line length set to 120, not the standard 79.
     I recommend testing various parts of this file at http://www.pythontutor.com/visualize.html
-it will give you a visual explanation of each step that happens behind the scenes """
+it will give you a visual explanation of each step that happens behind the scenes
+    For best visual experience use Monokai Seti """
 #
 #
 ######################
@@ -418,7 +419,76 @@ for n in G:
 " generator functions "
 #
 #
-# ///////WIP/////////
+# When a more complicated generator is needed, generator functions are where it's at.
+G1 = (n ** 2 for n in range(12))
+
+
+def gen():
+    for n in range(12):
+        yield n ** 2  # Instead of using return like in normal functions, here we call yield to yield a sequence
+G2 = gen()
+print(*G1)
+# 0 1 4 9 16 25 36 49 64 81 100 121
+print(*G2)
+# 0 1 4 9 16 25 36 49 64 81 100 121
+# Main difference here is that even though the state of both of the generators is saved between partial iterations
+# the function can be simply called again.
+#
+# < W I P >
+##############################
+
+
+""" collections module """
+#
+#
+# The collections module is a built-in implementation of additional specialized container data types:
+import collections as col
+#
+#
+"Counter"
+# Counter is a dictionary subclass that stores elements as keys and counts of the objects as the value.
+letters = "somebodyoncetoldmepleasetakeashoweryeahrightsureeeee"
+counted_letters = col.Counter(letters)
+counted_letters
+# Counter({'e': 13, 'o': 5, 'a': 4, 's': 4, 't': 3, 'r': 3, 'h': 3, 'y': 2, 'l': 2, [...], 'w': 1})
+counted_letters.most_common(3)
+# [('e', 13), ('o', 5), ('a', 4)]
+# Other common uses of Counter include .clear(), .items(), .most_common()[:-n-1:-1] for n least common elements, etc.
+#
+#
+"defaultdict"
+# A dictionary-like object which extends the dictionary with a special first argument (default_factory), which sets
+# the default data type for the dictionary. A defaultdict will never raise a KeyError due to this!
+def_dict = col.defaultdict(lambda: 1337)
+def_dict['shazam']
+# 1337
+#
+#
+"OrderedDict"
+# A special dictionary subclass that stores the contents in the order in which they were added
+ord_dict1 = col.OrderedDict()
+ord_dict1['one'] = 1
+ord_dict1['two'] = 2
+ord_dict2 = col.OrderedDict()
+ord_dict2['two'] = 2
+ord_dict2['one'] = 1
+# If those were normal dictionaries the statement below would be True
+ord_dict1 == ord_dict2
+# but here it evaluates to False!
+#
+#
+"namedtuple"
+# The most unique of the bunch, namedtuple assigns both names (which is the special feature) and indexes to each member:
+Movie = col.namedtuple('Movie', 'title year length')
+# You might sense what is comming, namedtuple allows for a very quick creation of new objects/classes!
+Space_Jam = Movie(title='Space Jam', year=1996, length='1h 28min')
+A_Scanner_Darkly = Movie(title='A Scanner Darkly', year=2006, length='1h 40min')
+Space_Jam.year  # Our tuples gain attributes!
+# 1996
+Space_Jam[1]  # while still being 'standard' tuples
+# 1996
+#
+#
 ##############################
 
 
@@ -455,10 +525,25 @@ with open('/tmp/random.bin', 'wb') as f:
 # If 'w' was used instead a TypeError would happen.
 #
 #
+"creating copies"
+# By using the copy module we gain the ability to make two types of copies: shallow ones and deep ones:
+import copy
+things = [1, 2, [3]]
+things_shallow = copy.copy(things)
+things_deep = copy.deepcopy(things)
+#
+#
 ##############################
 
 
 """ cool stuff really aka various examples """
+#
+#
+# If you want to reference to the last value you can use '_' instead of it's name:
+2 + 1
+# 3
+_ + 2
+# 5
 #
 #
 
