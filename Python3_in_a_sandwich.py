@@ -44,11 +44,59 @@ timetable = [[""] * 24 for day in range(7)]
 """ sets """
 #
 #
-# this is an empty dictionary
-a = {}
+# This is how we make an empty set
+a_set = set()
+# Now what can we do with sets?:
+# Add a value to it
+a_set.add(3)
+# Note that only a single argument can be passed here
+a_set.add(3)
+# Only unique values are stored
+a_set
+# {3}
+# Clear the set so it's empty
+a_set.clear()
+a_set = {2, 5, 9, 21}
+# Copy the set to a new set
+copy_set = a_set.copy()
+# Now both sets have the same insides but a modification to a_set won't affect copy_set
+a_set.add(111)
+# Return the difference between two sets
+a_set.difference(copy_set)
+# {111}
+# Return the first set after removing elements in the passed set
+a_set.difference_update(copy_set)
+a_set
+# {111}
+# Discard an element from a set if it is a member, otherwise this does nothing
+copy_set.discard(5)
 #
-# this is how we make an empty set
-b = set()
+# Now for something a tad different:
+supreme = {1, 2, 4, 5, 6}
+albatros = {1, 3, 5}
+# Return the intersection of two or more sets as a new set, .intersection_update exists
+supreme.intersetion(albatros)
+# {1, 5}
+# Return a boolean value, True if two sets have a null intersection, False otherwise
+supreme.isdisjoint(albatros)
+# False
+peanut = {1, 3}
+# Return whether the first set is contained in the other
+peanut.issubset(albatros)
+# True
+# Retrun whether the first set contains the passed one
+peanut.issuperset(albatros)
+# False
+# Return a symmetric difference of two sets as a new set, .symmetric_update exists
+supreme.symmetric_difference(albatros)
+# {2, 3, 4, 6}
+# Return the union of two sets
+supreme.union(peanut)
+# {1, 2, 3, 4, 5, 6}
+# Update a set with the union of itself with others
+peanut.update(supreme)
+peanut
+# {1, 2, 3, 4, 5, 6}
 #
 #
 ############################
@@ -536,7 +584,7 @@ things_deep = copy.deepcopy(things)
 ##############################
 
 
-""" cool stuff really aka various examples """
+""" cool stuff really aka various examples and such """
 #
 #
 # If you want to reference to the last value you can use '_' instead of it's name:
@@ -546,18 +594,58 @@ _ + 2
 # 5
 #
 #
+# # # # # # # # # # # # # # # #
+#
+#
+# There is this cool thing called bit shifting:
+17 >> 1  # shift to the right by one, << shifts to the left
+# 8
+# since 17 in base 2 is 10001 when we shift it to the right by one we get 1000
+#
+#
+# # # # # # # # # # # # # # # #
+#
+#
 
 
 def my_insides():
     sam = "Jolly Boy"
     twist = 1.34
-    return locals()  # {'sam': 'Jolly Boy', 'twist': 1.34}
+    return locals()
+# {'sam': 'Jolly Boy', 'twist': 1.34}
 
 
 def sam_how_are_you():
     sam = 'Been better'
-    return locals()['sam']  # 'Been better'
+    return locals()['sam']
+# 'Been better'
 # You can do the same thing with globals() which returns the global variables!
+#
+#
+# # # # # # # # # # # # # # # #
+#
+#
+"fun with numbers~"
+# besides the boring float, int and whatnot you can also make hexadecimal and binary numbers with ease!
+hex(659)
+# '0x293'
+bin(62)
+# '0b111110'
+#
+#
+# # # # # # # # # # # # # # # #
+#
+#
+# a random prime generator out of nowhere!
+def gen_primes(N):
+    primes = set()
+    for num in range(2, N):
+        if all(num % p > for p in primes):
+            primes.add(num)
+            yield num
+#
+#
+# # # # # # # # # # # # # # # #
 #
 #
 person = {}
@@ -605,6 +693,8 @@ print(data_by_release)
 #
 #
 # # # # # # # # # # # # # # # #
+#
+#
 
 
 def is_isogram(string):
