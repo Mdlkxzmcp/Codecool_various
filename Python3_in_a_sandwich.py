@@ -540,6 +540,43 @@ Space_Jam[1]  # while still being 'standard' tuples
 ##############################
 
 
+""" Regular Expressions and such """
+#
+#
+line = 'the quick brown fox jumped over a lazy dog'
+# Searching for the index of the first occurence of a char or substring:
+line.find('fox')
+# 16
+line.find('duck')  # If the char/substring isn't present
+# -1
+# You can also do this from the right side:
+line.rfind('a')
+# 35
+line.startswith('lazy')
+# False
+line.endswith('dog')
+# True
+# If you want to replace all of the occurences of the given input:
+line.replace('lazy', 'gigantic')  # this returns a new string v
+# 'the quick brown fox jumped over a gigantic dog'
+"splitting and partitioning"
+# You can partition a string into a tuple with partition():
+line.partition('fox')
+# ('the quick brown', 'fox', 'jumped over a lazy dog')
+# Just like with find, there is a rpartition() that searches form the right.
+# Splitting is done with the split(), in case of the need of splitting lines there is splitlines()
+# There is also the opposite of split() in a sense -> join()
+'-+-'.join(['5', '6', '7'])
+# '5-+-6-+-7'
+#
+#
+# < T B C >
+#
+#
+#
+##############################
+
+
 """ important notes """
 #
 #
@@ -632,11 +669,17 @@ hex(659)
 bin(62)
 # '0b111110'
 #
+# You can also right-pad a string (usually a number) with zeros:
+'256'.zfill(10)
+# '0000000256'
+#
 #
 # # # # # # # # # # # # # # # #
 #
 #
 # a random prime generator out of nowhere!
+
+
 def gen_primes(N):
     primes = set()
     for num in range(2, N):

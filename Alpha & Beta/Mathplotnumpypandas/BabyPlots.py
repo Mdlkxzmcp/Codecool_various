@@ -32,7 +32,7 @@ x = np.logspace(-1, 1, 40)
 y1 = x**2
 y2 = x**1.5
 
-plt.plot([0,1,2],[0,1,4],"rd-", label="Hidden o.o")
+plt.plot([0, 1, 2], [0, 1, 4], "rd-", label="Hidden o.o")
 plt.loglog(x, y1, "go-", label="Firsto")
 plt.loglog(x, y2, "gs-", linewidth=2, markersize=6, label="Seccundo")
 plt.xlabel("$X$")  # LaTeX styled
@@ -44,7 +44,7 @@ plt.savefig("bplot.pdf")
 ##################
 
 x = np.random.normal(size=1000)
-plt.hist(x, normed=True, bins=np.linspace(-5, 5, 201));
+plt.hist(x, normed=True, bins=np.linspace(-5, 5, 201))
 
 ##################
 
@@ -65,8 +65,8 @@ plt.savefig("ahist.pdf")
 
 rolls = []
 for k in range(100000):
-	rolls.append(random.choice([1, 2, 3, 4, 5, 6]))
-plt.hist(rolls, bins=np.linspace(0.5, 6.5, 7));
+    rolls.append(random.choice([1, 2, 3, 4, 5, 6]))
+plt.hist(rolls, bins=np.linspace(0.5, 6.5, 7))
 
 ##################
 
@@ -74,16 +74,16 @@ start_time = time.clock()
 
 ys = []
 for rep in range(1000000):
-	y = 0
-	for k in range(10):
-		x = random.choice([1, 2, 3, 4, 5, 6])
-		y = y + x
-	ys.append(y)
+    y = 0
+    for k in range(10):
+        x = random.choice([1, 2, 3, 4, 5, 6])
+        y = y + x
+    ys.append(y)
 
 end_time = time.clock()
 print(end_time - start_time)
 
-plt.hist(ys);
+plt.hist(ys)
 
 ##################
 
@@ -105,7 +105,7 @@ Y = np.sum(X, axis=1)
 end_time = time.clock()
 print(end_time - start_time)
 
-plt.hist(Y);
+plt.hist(Y)
 
 # woobwoob explanations
 np.sum(X)  # sums all of the data
@@ -117,5 +117,5 @@ np.sum(X, axis=1)  # sums all the columns
 X_0 = np.array([[0], [0]])
 delta_X = np.random.normal(0, 1, (2, 10000))
 X = np.concatenate((X_0, np.cumsum(delta_X, axis=1)), axis=1)
-plt.plot(X[0], X[1], "go-");
+plt.plot(X[0], X[1], "go-")
 plt.savefig("randomwalk.pdf")
