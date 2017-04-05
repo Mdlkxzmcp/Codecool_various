@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
 		<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
 		<meta charset="UTF-8">
 		<title>///////</title>
@@ -23,32 +22,37 @@
 		<main>
 
 			{% for waifu in waifus %}
-			<section class="waifu">
-				<header>
-					{% if waifu.waifu_of_the_month %}
-						<h2>{{ waifu.name }} is the current waifu of the month</h2>
-					{% else %}
-						<h2>{{ waifu.name }}</h2>
-					{% endif %}
-				</header>
-					<img src="{{ waifu.img_url }}" />
-				<table>
-					<tr>
-						<th>From:</th>
-						<td>{{ waifu.series }}</td>
-					</tr>
-					<tr>
-						<th>Rating:</th>
-						<td>{{ waifu.rating }}</td>
-					</tr>
-					<tr>
-						<th>Height:</th>
-						<td>{{ waifu.height }} cm</td>
-					</tr>
 
-				</table>
-			</section>
-			<br>
+			{% if waifu.waifu_of_the_month %}
+				<section class="waifu best">
+			{% else %}
+				<section class="waifu">
+			{% endif %}
+					<img src="{{ waifu.img_url }}" />
+					<header>
+						{% if waifu.waifu_of_the_month %}
+							<h2>{{ waifu.name }} is the current waifu of the month</h2>
+						{% else %}
+							<h2>{{ waifu.name }}</h2>
+						{% endif %}
+					</header>
+					<table>
+						<tr>
+							<th>From:</th>
+							<td>{{ waifu.series }}</td>
+						</tr>
+						<tr>
+							<th>Rating:</th>
+							<td>{{ waifu.rating }}</td>
+						</tr>
+						<tr>
+							<th>Height:</th>
+							<td>{{ waifu.height }} cm</td>
+						</tr>
+
+					</table>
+				</section>
+				<br>
 			{% endfor %}
 
 		</main>
