@@ -21,11 +21,11 @@ def russian(a, b):
         a = a >> 1
     return c
 
-    
+
 def rec_russian(a, b):
     if a == 0:
         return 0
     elif a % 2 == 0:
-        return 2 * rec_russian(a/2, b)
+        return 2 * rec_russian(a / 2, b)
     else:
         return b + 2 * rec_russian((a - 1) / 2, b)
