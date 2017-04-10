@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<main class="detail">
+	<figure class="waifu">
+		<figcaption>
+			<h2>{{ waifu.name }}</h2>
+		</figcaption>
+		<img src="{{ waifu.image.url }}" />
+		<table>
+		    <tr>
+		        <th>From:</th>
+		        <td>{{ waifu.series }}</td>
+		    </tr>
+		    <tr>
+		        <th>Rating:</th>
+		        <td>{{ waifu.rating }}</td>
+		    </tr>
+		    <tr>
+		        <th>Height:</th>
+		        <td>{{ waifu.height }} cm</td>
+		    </tr>
+		</table>
+	</figure>
+</main>
+{% endblock %}

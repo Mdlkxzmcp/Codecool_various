@@ -1,64 +1,43 @@
+{% extends 'base.html' %}
 {% load staticfiles %}
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
-		<meta charset="UTF-8">
-		<title>///////</title>
-	</head>
-	<body>
+{% block content %}
+<main>
+	<section class="waifus">
+	{% for waifu in waifus %}
+		<a href="/{{waifu.id}}/">
+		{% if waifu.waifu_of_the_month %}
+			<figure class="waifu best">
+		{% else %}
+			<figure class="waifu">
+		{% endif %}
+				<img src="{{ waifu.image.url }}" />
+				<figcaption>
+					{% if waifu.waifu_of_the_month %}
+						<h2>{{ waifu.name }} is the current waifu of the month</h2>
+					{% else %}
+						<h2>{{ waifu.name }}</h2>
+					{% endif %}
+				</figcaption>
+				<button id="hearts" data-id="{{waifu.id}}"
+				        class="glyphicon-heart" type="button">
+					{% if waifu.hearts > 0 %}
+						{{ waifu.hearts }}
+					{% endif %}
+				</button>
+			</figure>
+		</a>
+	{% endfor %}
+	</section>
 
-		<nav class="navbar">
-			<a href="/">
-				<img src="{% static 'images/WaifuTracker.png' %}" alt="WaifuTracker Logo">
-			</a>
-		</nav>
+	<section class="form">
+		<form enctype="multipart/form-data" action="post_url/" method="post">
+			<h2>Add a waifu!</h2>
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Submit" />
+		</form>
+	</section>
 
-		<header>
-			<h1>WaifuTracker</h1>
-		</header>
-
-		<main>
-
-			{% for waifu in waifus %}
-
-			{% if waifu.waifu_of_the_month %}
-				<section class="waifu best">
-			{% else %}
-				<section class="waifu">
-			{% endif %}
-					<img src="{{ waifu.img_url }}" />
-					<header>
-						{% if waifu.waifu_of_the_month %}
-							<h2>{{ waifu.name }} is the current waifu of the month</h2>
-						{% else %}
-							<h2>{{ waifu.name }}</h2>
-						{% endif %}
-					</header>
-					<table>
-						<tr>
-							<th>From:</th>
-							<td>{{ waifu.series }}</td>
-						</tr>
-						<tr>
-							<th>Rating:</th>
-							<td>{{ waifu.rating }}</td>
-						</tr>
-						<tr>
-							<th>Height:</th>
-							<td>{{ waifu.height }} cm</td>
-						</tr>
-
-					</table>
-				</section>
-				<br>
-			{% endfor %}
-
-		</main>
-	</body>
-
-	<footer>
-		<h3>© WaifuTracker 2017 made by Mdlkxzmcp</h3>
-	</footer>
-</html>
+</main>
+{% endblock %}

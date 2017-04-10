@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<main class="profile">
+	<h1>{{ username }}</h1>
+	<section class="waifus">
+	{% for waifu in waifus %}
+		<a href="/{{waifu.id}}/">
+			<figure class="waifu">
+				<figcaption>
+					<h2>{{ waifu.name }}</h2>
+				</figcaption>
+				<img src="{{ waifu.image.url }}" />
+			</figure>
+		</a>
+	{% endfor %}
+	</section>
+</main>
+{% endblock %}

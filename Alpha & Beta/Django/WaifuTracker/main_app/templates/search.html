@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<main class="search">
+	<section class="form">
+		<form id="search-form" method="get" action="">
+			<h2>Search Waifus</h2>
+			<input id="search-text" type="text" />
+			<input type="submit" value="Submit" />
+		</form>
+		<br>
+		<ul id="result-list">
+		</ul>
+	</section>
+</main>
+{% endblock %}
