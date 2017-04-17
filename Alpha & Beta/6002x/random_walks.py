@@ -1,3 +1,9 @@
+import random
+import math
+import matplotlib.pyplot as plt
+import matplotlib.pylab as pylab
+
+
 class Location(object):
 
     def __init__(self, x, y):
@@ -49,6 +55,27 @@ class Field(object):
         self.drunks[drunk] = current_location.move(x_distance, y_distance)
 
 
+class OddField(Field):
+
+    def __init__(self, number_of_wormholes=1000, x_range=100, y_range=100):
+        super().__init__()
+        self.wormholes = {}
+        for wormhole in range(number_of_wormholes):
+            x = random.randint(-x_range, x_range)
+            y = random.randint(-y_range, y_range)
+            new_x = random.randint(-x_range, x_range)
+            new_y = random.randint(-y_range, y_range)
+            new_location = Location(new_x, new_y)
+            self.wormholes[(x, y)] = new_location
+
+    def move_drunk(self, drunk):
+        super().move_drunk(drunk)
+        x = self.drunks[drunk].get_X()
+        y = self.drunks[drunk].get_Y()
+        if (x, y) in self.wormholes:
+            self.drunks[drunk] = self.wormholes[(x, y)]
+
+
 class Drunk(object):
 
     def __init__(self, name='Bob'):
@@ -56,8 +83,6 @@ class Drunk(object):
 
     def __str__(self):
         return 'This drunk is named ' + self.name
-
-import random
 
 
 class UsualDrunk(Drunk):
@@ -70,7 +95,29 @@ class UsualDrunk(Drunk):
 class ColdDrunk(Drunk):
 
     def take_step(self):
-        step_choices = [(0, 0.9), (0, -1.1), (1, 0), (-1, 0)]
+        step_choices = [(0, 0.9), (0, -1.03), (1.03, 0), (-1.03, 0)]
+        return random.choice(step_choices)
+
+
+class EDrunk(Drunk):
+
+    def take_step(self):
+        angle = 2 * math.pi * random.random()
+        length = 0.5 + 0.5 * random.random()
+        return (length * math.sin(ang), length * math.cos(ang))
+
+
+class PhotoDrunk(Drunk):
+
+    def take_step(self):
+        step_choices = [(0, 0.5), (0, 0.5), (1.5, 0), (-1.5, 0)]
+        return random.choice(step_choices)
+
+
+class DDrunk(Drunk):
+
+    def take_step(self):
+        step_choices = [(0.85, 0.85), (-0.85, -0.85), (-0.56, 0.56), (0.56, -0.56)]
         return random.choice(step_choices)
 
 
@@ -138,9 +185,6 @@ def simulate_drunk(number_of_trials, drunk_class, walk_lengths):
         mean_distances.append(mean)
     return mean_distances
 
-import matplotlib.pyplot as plt
-import matplotlib.pylab as pylab
-
 
 def simulate_all(drunk_kinds, walk_lengths, number_of_trials):
     style_choice = style_iterator(('m-', 'b--', 'g-.'))
@@ -153,8 +197,6 @@ def simulate_all(drunk_kinds, walk_lengths, number_of_trials):
     plt.xlabel('Number of Steps')
     plt.ylabel('Distance from Origin')
     plt.legend(loc='best')
-
-# simulate_all((UsualDrunk, ColdDrunk), (1, 10, 100, 1000, 10000), 100)
 
 
 def get_final_locations(number_of_steps, number_of_trials, drunk_class):
@@ -191,30 +233,6 @@ def plot_locations(drunk_kinds, number_of_steps, number_of_trials):
         pylab.ylabel('Steps North/South of Origin')
         pylab.legend(loc='upper left')
 
-# random.seed(0)
-# plot_locations((UsualDrunk, ColdDrunk), 10000, 1000)
-
-
-class OddField(Field):
-
-    def __init__(self, number_of_wormholes=1000, x_range=100, y_range=100):
-        super().__init__()
-        self.wormholes = {}
-        for wormhole in range(number_of_wormholes):
-            x = random.randint(-x_range, x_range)
-            y = random.randint(-y_range, y_range)
-            new_x = random.randint(-x_range, x_range)
-            new_y = random.randint(-y_range, y_range)
-            new_location = Location(new_x, new_y)
-            self.wormholes[(x, y)] = new_location
-
-    def move_drunk(self, drunk):
-        super().move_drunk(drunk)
-        x = self.drunks[drunk].get_X()
-        y = self.drunks[drunk].get_Y()
-        if (x, y) in self.wormholes:
-            self.drunks[drunk] = self.wormholes[(x, y)]
-
 
 def trace_walk(field_kinds, number_of_steps):
     style_choice = style_iterator(('b+', 'r^', 'ko'))
@@ -237,4 +255,23 @@ def trace_walk(field_kinds, number_of_steps):
         pylab.ylabel('Steps North/South of Origin')
         pylab.legend(loc='best')
 
-# trace_walk((Field, OddField), 500)
+
+def walkVector(field, drunk, number_of_steps):
+    start = field.get_location(drunk)
+    for step in range(number_of_steps):
+        field.move_drunk(drunk)
+    return(field.get_location(drunk).get_X() - start.get_X(),
+           field.get_location(drunk).get_Y() - start.get_Y())
+
+
+def main():
+
+    # simulate_all((UsualDrunk, ColdDrunk), (1, 10, 100, 1000, 10000), 100)
+
+    # random.seed(0)
+    # plot_locations((UsualDrunk, ColdDrunk), 10000, 1000)
+
+    # trace_walk((Field, OddField), 500)
+
+if __name__ == "__main__":
+    main()
