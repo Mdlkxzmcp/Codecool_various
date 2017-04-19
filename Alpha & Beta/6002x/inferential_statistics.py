@@ -174,6 +174,7 @@ def main():
     # pylab.xlabel('Value')
     # pylab.ylabel('Probability')
     # pylab.legend()
+    # pylab.show()
     #
     # number_of_trials = 50000
     # number_of_spins = 200
@@ -185,6 +186,7 @@ def main():
     # pylab.xlabel('Mean Return')
     # pylab.ylabel('Probability')
     # pylab.title('Expected Return Betting a Pocket')
+    # pylab.show()
 
 if __name__ == '__main__':
     main()
