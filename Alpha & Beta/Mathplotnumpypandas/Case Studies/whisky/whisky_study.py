@@ -8,7 +8,7 @@ from bokeh.plotting import figure, output_file, show
 from bokeh.models import HoverTool, ColumnDataSource
 from itertools import product
 
-###################
+######## practice pt1
 
 x = pd.Series([6, 3, 8, 6], index=["q", "w", "e", "r"])
 # print(x.index)
@@ -19,7 +19,7 @@ x = x.reindex(sorted(x.index))
 y = pd.Series([7, 3, 5, 2], index=["e", "q", "r", "t"])
 # print(x + y)
 
-###################
+######## practice pt2
 
 data = {'name': ['Tim', 'Jim', 'Pam', 'Sam'],
         'age': [29, 31, 27, 35],
@@ -27,7 +27,7 @@ data = {'name': ['Tim', 'Jim', 'Pam', 'Sam'],
 y = pd.DataFrame(data, columns=["name", "age", "ZIP"])
 # print(y.name)
 
-###################
+######## whisky preparations and plotting
 
 whisky = pd.read_csv("whiskies.txt")
 whisky["Region"] = pd.read_csv("regions.txt")
@@ -70,7 +70,7 @@ plt.pcolor(correlations)
 plt.title("Rearranged")
 # plt.savefig("correlations.pdf")
 
-###################
+######## practice pt3 - using bokeh pt1
 
 plot_values = [1,2,3,4,5]
 plot_colors = ["red", "blue"]
@@ -98,7 +98,7 @@ hover.tooltips = {
     }
 show(fig)
 
-###################
+######## practice pt3 - using bokeh pt2
 
 points = [(0,0), (1,2), (3,1)]
 xs, ys = zip(*points)
