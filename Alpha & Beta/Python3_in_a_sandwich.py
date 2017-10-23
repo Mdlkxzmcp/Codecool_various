@@ -1,25 +1,164 @@
 # coding=utf-8
-""" A .py file showing various important parts of Python as well as those that are just cool :3
+""" A .py file showing various important parts of Python as well as those that are just cool!
 pep8 line length set to 120, not the standard 79.
     I recommend testing various parts of this file at http://www.pythontutor.com/visualize.html
 it will give you a visual explanation of each step that happens behind the scenes
-    For best visual experience use Monokai Seti """
+    More information can be found at the bottom of the file. This is still a WIP, and as such doesn't include proper
+annotations regarding sources. Final version will be a .ipynb file.
+    For best visual experience use Monokai Seti. """
 #
 #
 ######################
 
 
-""" Raw strings """
+""" raw strings """
 #
 #
 # This string ends in a newline
-print("Hello!\n")
-#
+print("Hello!\n boo!")
+# Hello!
+#  boo!
 # This string ends in a backslash followed by an 'n'
-print(r"Hello!\n")
+print(r"Hello!\n boo")
+# Hello!\n boo
+#
+# There are also ways to format values into strings.
+from math import pi
+# The simplest way is to find the string representation:
+"The value of pi is " + str(pi)
+# 'The value of pi is 3.141592653589793'
+#
+# That technique is quite limitting though, thankfully we can use special format method:
+"The value of pi is {}".format(pi)
+# 'The value of pi is 3.141592653589793'
+#
+"The value of pi is {1:.3f}; my lucky number is {0}".format(8, pi)  # where 1 and 0 refer to the index of the value
+# 'The value of pi is 3.142; my lucky number is 8'                  # and the .3f encodes the desired precision
+#
+"First: {last}. Last: {first}.".format(last="first", first="last")
+# 'First: first. Last: last.'
 #
 #
 ###########################
+
+
+""" Regular Expressions and such """
+#
+#
+line = 'the quick brown fox jumped over a lazy dog'
+# Searching for the index of the first occurence of a char or substring:
+line.find('fox')
+# 16
+line.find('duck')  # If the char/substring isn't present
+# -1
+# You can also do this from the right side:
+line.rfind('a')
+# 35
+line.startswith('lazy')
+# False
+line.endswith('dog')
+# True
+# If you want to replace all of the occurences of the given input:
+line.replace('lazy', 'gigantic')  # this returns a new string v
+# 'the quick brown fox jumped over a gigantic dog'
+"splitting and partitioning"
+# You can partition a string into a tuple with partition():
+line.partition('fox')
+# ('the quick brown', 'fox', 'jumped over a lazy dog')
+# Just like with find, there is a rpartition() that searches form the right.
+# Splitting is done with the split(), in case of the need of splitting lines there is splitlines()
+# There is also the opposite of split() in a sense -> join()
+'-+-'.join(['5', '6', '7'])
+# '5-+-6-+-7'
+#
+# This is great and all, but the real power comes with 'regular expressions'.
+import re
+regex = re.compile('\s+')  # \s is a special character that matches any whitespace, and the + indicates mach one or more
+regex.split(line)
+# ['the', 'quick', 'brown', 'fox', 'jumped', 'over', 'a', 'lazy', 'dog']
+# regex has some methods that are really similar to str methods:
+line.index('fox')
+# 16
+regex = re.compile('fox')
+match = regex.search(line)
+match.start()
+# 16
+#
+line.replace('fox', 'BEAR')
+# 'the quick brown BEAR jumped over a lazy dog'
+regex.sub('BEAR', line)
+# 'the quick brown BEAR jumped over a lazy dog'
+#
+# despite some similar methods and such, regular expressions support way more complex ways of doing things:
+email = re.compile('\w+@\w+\.[a-z]{2}')
+text = "To email Lord Cheesecake, try lord@cheesecake.jp or the older address sir.mighty@cheesecake.jp."
+email.findall(text)
+# ['lord@cheesecake.jp', 'mighty@cheesecake.jp']
+email.sub('--@--.--', text)
+# 'To email Lord Cheesecake, try --@--.-- or the older address sir.--@--.--.'
+# regular expressions are strict though:
+email.findall('barack.obama@whitehouse.gov')
+# ['obama@whitehouse.go']
+#
+# you can match special characters by escaping them with a backslash when using a raw string:
+regex = re.compile(r'\$')
+regex.findall("the cost is $20")
+# ['$']
+#
+# said special characters within regular expressions are:
+# . ^ $ * + ? { } [ ] \ | ( )
+#
+# otherwise backslash makes some characters 'special markers'. Here are some:
+# \d - digit
+# \D - non-digit
+# \s - whitespace
+# \S - non-whitespace
+# \w - alphanumeric char
+# \W - non-alphanumeric char
+regex = re.compile(r'\w\s\w')
+regex.findall('the fox is 9 years old')
+['e f', 'x i', 's 9', 's o']
+#
+# square brackets match groups of custom characters:
+regex = re.compile('[aeiou]')
+regex.split('incompetent')
+# ['', 'nc', 'mp', 't', 'nt']
+#
+# dash is used to specify a range:
+regex = re.compile('[c-t][1-6]')
+regex.findall('gf65s2cc9i4, l2l3s00G4')
+# ['f6', 's2', 'i4', 'l2', 'l3']
+#
+# curly brackets with a number represent a repetition:
+regex = re.compile(r'\w{3}')
+regex.findall(line)
+# ['the', 'qui', 'bro', 'fox', 'jum', 'ped', 'ove', 'laz', 'dog']
+#
+# other repetition markers for regex:
+# ?      - zero or one
+# *      - zero or more
+# +      - one or more
+# {n}    - n repetitions
+# {m, n} - between m and n repetitions
+#
+email = re.compile('[\w.]*@\w+\.[a-z]{2,3}')
+email.findall('barack.obama@whitehouse.gov')
+# ['barack.obama@whitehouse.gov']
+#
+# parentheses indicate groups to extract:
+email = re.compile('([\w.]*)@(\w+)\.([a-z]{2,3})')
+email.findall(text)
+# [('lord', 'cheesecake', 'jp'), ('sir.mighty', 'cheesecake', 'jp')]
+#
+# it is also possible to name the extracted components:
+email = re.compile('(?P<user>[\w.]*)@(?P<domain>\w+)\.(?P<suffix>[a-z]{2,3})')
+match = email.match('lord@cheesecake.jp')
+match.groupdict()
+# {'domain': 'cheesecake', 'suffix': 'jp', 'user': 'lord'}
+#
+#
+##############################
+
 
 """ lists """
 #
@@ -535,43 +674,6 @@ Space_Jam.year  # Our tuples gain attributes!
 # 1996
 Space_Jam[1]  # while still being 'standard' tuples
 # 1996
-#
-#
-##############################
-
-
-""" Regular Expressions and such """
-#
-#
-line = 'the quick brown fox jumped over a lazy dog'
-# Searching for the index of the first occurence of a char or substring:
-line.find('fox')
-# 16
-line.find('duck')  # If the char/substring isn't present
-# -1
-# You can also do this from the right side:
-line.rfind('a')
-# 35
-line.startswith('lazy')
-# False
-line.endswith('dog')
-# True
-# If you want to replace all of the occurences of the given input:
-line.replace('lazy', 'gigantic')  # this returns a new string v
-# 'the quick brown fox jumped over a gigantic dog'
-"splitting and partitioning"
-# You can partition a string into a tuple with partition():
-line.partition('fox')
-# ('the quick brown', 'fox', 'jumped over a lazy dog')
-# Just like with find, there is a rpartition() that searches form the right.
-# Splitting is done with the split(), in case of the need of splitting lines there is splitlines()
-# There is also the opposite of split() in a sense -> join()
-'-+-'.join(['5', '6', '7'])
-# '5-+-6-+-7'
-#
-#
-# < T B C >
-#
 #
 #
 ##############################
