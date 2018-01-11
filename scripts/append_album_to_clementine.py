@@ -13,13 +13,15 @@ import sys, getopt, os, re, dbus
 def displayHelpMessage():
     print("""
           Usage: append_album_to_clementine.py [options]
+          Assumes: Clementine is running.
           Options:
               -h, --help        show this help message and exit.
               -p, --play        [default: False] Used to play the first track
                                 from the appended list.
               -i PATH, --input=PATH
-                                Supply a path to the album(s) you would wish
-                                to append to the current Clementine playlist.""")
+                                [default: cwd] Supply a path to the album(s)
+                                you would wish to append to the current 
+                                Clementine playlist.""")
 
 
 def createTrackList(folder_path):
@@ -30,10 +32,12 @@ def createTrackList(folder_path):
             file_path = subdir + os.sep + file
             if re.search("\.(mp3|ogg|flac|aac)$", file_path): # HACK
                 track_list.append(file_path)
+
     return track_list
 
 
 def appendAlbum(folder_path, play_now=False):
+def appendAlbum(folder_path=os.getcwd(), play_now=False):
     track_list = createTrackList(folder_path)
     interface = createInterface()
     last_track_in_playlist_id = interface.GetLength()
@@ -54,7 +58,7 @@ def createInterface():
     return dbus.Interface(track_list, dbus_interface='org.freedesktop.MediaPlayer')
 
 
-def main(argv):
+def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hpi:", ["help", "play_now", "input="])
     except getopt.GetoptError as err:
@@ -63,6 +67,7 @@ def main(argv):
         sys.exit(2)
     
     play_now = False
+
     for opt, arg in opts:
         if opt in ('-h', "--help"):
             displayHelpMessage()
@@ -72,9 +77,8 @@ def main(argv):
         elif opt in ('-i', '--input'):
             appendAlbum(arg, play_now)
         else:
-            assert False, "unhandled option"
+            appendAlbum()
 
 
 if __name__ == "__main__":
     main()
-
